@@ -10,6 +10,8 @@ from config import OWNER_ID
 
 @app.on_message(filters.command(["الغاء حظر"], "") & filters.group)
 async def unbaneed(client, message):
+    get = await client.get_chat_member(message.chat.id, messgae.from_user.id)
+    if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
     if not message.reply_to_message: return await message.reply_text(f"**قم بالرد علي رساله**")
     user_id = message.reply_to_message.from_user.id
     try:
@@ -19,6 +21,8 @@ async def unbaneed(client, message):
          return await message.reply_text(f"**فشل الغاء هذه المستخدم*")
 @app.on_message(filters.command(["حظر"], "") & filters.group)
 async def baneed(client, message):
+    get = await client.get_chat_member(message.chat.id, messgae.from_user.id)
+    if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
     if not message.reply_to_message: return await message.reply_text(f"**قم بالرد علي رساله**")
     user_id = message.reply_to_message.from_user.id
     try:
@@ -30,6 +34,8 @@ mute = []
 
 @app.on_message(filters.command(["كتم"], "") & filters.group)
 async def muted(client, message):
+    get = await client.get_chat_member(message.chat.id, messgae.from_user.id)
+    if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
     if not message.reply_to_message: return await message.reply_text(f"**قم بالرد علي رساله**")
     user_id = message.reply_to_message.from_user.id
     if not user_id in mute: mute.append(user_id)
@@ -38,6 +44,8 @@ async def muted(client, message):
 
 @app.on_message(filters.command(["الغاء كتم"], "") & filters.group)
 async def muted(client, message):
+    get = await client.get_chat_member(message.chat.id, messgae.from_user.id)
+    if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
     if not message.reply_to_message: return await message.reply_text(f"**قم بالرد علي رساله**")
     user_id = message.reply_to_message.from_user.id
     if user_id in mute: mute.remove(user_id)
@@ -73,6 +81,60 @@ async def rddd(client, message):
    await message.reply_text(f"**[{x}](https://t.me/{app.username}?startgroup=True)**", disable_web_page_preview=True)
 
 
+
+array = []
+@app.on_message(command(["@all", "تاك","تاك للكل"]) & ~filters.private)
+async def nummmm(client: app, message):
+  if message.chat.id in array:
+     return await message.reply_text("التاك قيد التشغيل حالياً ،")
+  chek = await client.get_chat_member(message.chat.id, message.from_user.id)
+  if not chek.status in ["administrator", "creator"]:
+    await message.reply("يجب انت تكون مشرف لاستخدام الامر 🖱️")
+    return
+  await message.reply_text("جاري بدأ المنشن ، لايقاف الامر اضغط \n /cancel او اكتب بس منشن")
+  i = 0
+  txt = ""
+  zz = message.text
+  try:
+   zz = zz.replace("@all","").replace("تاك","").replace("نادي الكل","")
+  except:
+    pass
+  array.append(message.chat.id)
+  async for x in client.iter_chat_members(message.chat.id):
+      if message.chat.id not in array:
+        return
+      if not x.user.is_deleted:
+       i += 1
+       txt += f" {x.user.mention} ،"
+       if i == 5:
+        try:
+              await client.send_photo(message.chat.id, photo=photo, caption=f"{zz}\n{txt}")
+              i = 0
+              txt = ""
+              await asyncio.sleep(2)
+        except FloodWait as e:
+                    flood_time = int(e.x)
+                    if flood_time > 200:
+                        continue
+                    await asyncio.sleep(flood_time)
+        except Exception:
+              array.remove(message.chat.id)
+  array.remove(message.chat.id)
+
+
+@app.on_message(command(["بس المنشن", "/cancel","بس منشن"]))
+async def stop(client, message):
+  chek = await client.get_chat_member(message.chat.id, message.from_user.id)
+  if not chek.status in ["administrator", "creator"]:
+    await message.reply("**يجب انت تكون مشرف لاستخدام الامر 🖱️")
+    return
+  if message.chat.id not in array:
+     await message.reply("المنشن متوقف بالفعل")
+     return 
+  if message.chat.id in array:
+    array.remove(message.chat.id)
+    await message.reply("تم ايقاف المنشن بنجاح✅")
+    return
 @app.on_message(
      command(["ميمو"])
     & ~filters.edited
