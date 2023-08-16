@@ -195,14 +195,11 @@ async def stream(
                 "video" if video else "audio",
                 forceplay=forceplay,
             )
-            x = await app.get_users(xxx)
-            xxx = None
-            if x.photo:
-              xxx = await app.download_media(x.photo.big_file_id)
-            img = await gen_thumb(vidid, xxx)
-            button = stream_markup(_, vidid, chat_id)
-            men = x.mention
-            run = await app.send_photo(
+            try:
+             img = "https://telegra.ph/file/81d985a99a5c0a4bb30af.jpg"
+             button = stream_markup(_, vidid, chat_id)
+             men = user_name
+             run = await app.send_photo(
                 original_chat_id,
                 photo=img,
                 caption=_["stream_1"].format(
@@ -210,7 +207,9 @@ async def stream(
                     f"https://t.me/{app.username}?start=info_{vidid}",
                 ),
                 reply_markup=InlineKeyboardMarkup(button),
-            )
+             )
+            except Exception as a:
+                print(a)
             db[chat_id][0]["mystic"] = run
             db[chat_id][0]["markup"] = "stream"
     elif streamtype == "soundcloud":

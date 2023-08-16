@@ -28,12 +28,12 @@ def changeImageSize(maxWidth, maxHeight, image):
     newHeight = int(heightRatio * image.size[1])
     newImage = image.resize((newWidth, newHeight))
     return newImage
-
+ahmed = ""
 
 async def gen_thumb(videoid, photo):
    try:
-        if os.path.isfile(f"{photo}.png"):
-          return f"{photo}.png"
+        if os.path.isfile(f"{videoid}{photo}.png"):
+          return f"{videoid}{photo}.png"
         url = f"https://www.youtube.com/watch?v={videoid}"
         results = VideosSearch(url, limit=1)
         for result in (await results.next())["result"]:
@@ -95,7 +95,7 @@ async def gen_thumb(videoid, photo):
         j = 0
         draw.text(
             (600, 150),
-            "SASA PlAYiNg",
+            "MEMO PlAYiNg",
             fill="white",
             stroke_width=2,
             stroke_fill="white",
@@ -141,11 +141,8 @@ async def gen_thumb(videoid, photo):
             (255, 255, 255),
             font=arial,
         )
-        try:
-          background.save(f"{photo}.png")
-          return f"{photo}.png"
-        except:
-          background.save(f"{videoid}.png")
-          return f"{videoid}.png"
-   except Exception:
+        background.save(f"{videoid}{photo}.png")
+        return f"{videoid}{photo}.png"
+   except Exception as a:
+        print(a)
         return ahmed

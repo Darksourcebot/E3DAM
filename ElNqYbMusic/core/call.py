@@ -594,15 +594,5 @@ class Call(PyTgCalls):
                 update, JoinedGroupCallParticipant
             ) and not isinstance(update, LeftGroupCallParticipant):
                 return
-            try:
-              chat_id = update.chat_id
-              got = len(await client.get_participants(chat_id))
-              if got == 1:
-               await asyncio.sleep(2)
-               await self.stop_stream(chat_id)
-               await app.send_message(chat_id, "لقد غادرت المكالمه الصوتيه لان لا يوجد احد وهذا يدمر السيرفر وشكرا ❤️🌚.")
-              return
-            except:
-               pass
 
 ElNqYb = Call()

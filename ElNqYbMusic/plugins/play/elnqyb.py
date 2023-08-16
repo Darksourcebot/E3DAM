@@ -7,83 +7,6 @@ from ElNqYbMusic import (Apple, Resso, SoundCloud, Spotify, Telegram, YouTube, a
 from config import OWNER_ID
 
 
-id = {}
-@app.on_callback_query(filters.regex("heart"))  
-async def heart(client, query: CallbackQuery):  
-    callback_data = query.data.strip()  
-    callback_request = callback_data.replace("heart", "")  
-    username = int(callback_request)
-    usr = await client.get_chat(username)
-    if not query.from_user.mention in id[usr.id]:
-         id[usr.id].append(query.from_user.mention)
-    else:
-         id[usr.id].remove(query.from_user.mention)
-    idd = len(id[usr.id])
-    await query.edit_message_text(f"**NAME : {usr.first_name}**\n**BIO : {usr.bio} .", reply_markup=InlineKeyboardMarkup(  
-            [
-                [ 
-                    InlineKeyboardButton(  
-                        f"يوزرك", callback_data=f"usernamec{usr.id}")
-                ],
-                [  
-                    InlineKeyboardButton(  
-                        f"ايديك", callback_data=f"idc{usr.id}")
-                ],
-                [  
-                    InlineKeyboardButton(  
-                        f"♥️ {idd}", callback_data=f"heart{usr.id}")
-                ],  
-            ]  
-        ),  
-    )
-@app.on_callback_query(filters.regex("idc"))  
-async def xxid(client, query: CallbackQuery):  
-    callback_data = query.data.strip()  
-    callback_request = callback_data.replace("idc", "")  
-    username = int(callback_request) 
-    if not query.from_user.id == username: 
-       return await query.answer("لايمكنك طباعه معلومات شخص اخر : ❤️", show_alert=True) 
-    username = f"ايديك هو : `{username}`" if username else "ليس لديك ايدي" 
-    await query.message.reply_to_message.reply_text(username)  
-
-@app.on_callback_query(filters.regex("usernamec"))  
-async def xxuser(client, query: CallbackQuery):  
-    callback_data = query.data.strip()  
-    callback_request = callback_data.replace("usernamec", "")  
-    username = int(callback_request) 
-    if not query.from_user.id == username: 
-       return await query.answer("لايمكنك طباعه معلومات شخص اخر : ❤️", show_alert=True) 
-    user = await client.get_chat(username) 
-    username = f"معرفك هو : @{user.username}" if user.username else "ليس لديك معرف" 
-    await query.message.reply_to_message.reply_text(username)  
-
-@app.on_message(  
-    filters.command(["ايدي", "ا"], "")  
-)  
-async def ssorh(client, message):  
-    usr = await client.get_chat(message.from_user.id)  
-    name = usr.first_name
-    if not id.get(message.from_user.id):
-       id[usr.id] = []
-    idd = len(id[usr.id])
-    await client.send_photo(message.chat.id, photo="https://telegra.ph/file/d3d23e8cff24c7c1df1fe.jpg", caption=f"**NAME : {message.from_user.first_name}**\n**BIO : {usr.bio}", reply_to_message_id=message.message_id,  
-    reply_markup=InlineKeyboardMarkup(  
-            [
-                [ 
-                    InlineKeyboardButton(  
-                        f"يوزرك", callback_data=f"usernamec{usr.id}")
-                ],
-                [  
-                    InlineKeyboardButton(  
-                        f"ايديك", callback_data=f"idc{usr.id}")
-                ],
-                [  
-                    InlineKeyboardButton(  
-                        f"♥️ {idd}", callback_data=f"heart{usr.id}")
-                ],
-            ]  
-        ),  
-    )
 
 @app.on_message(filters.command(["الغاء حظر"], "") & filters.group)
 async def unbaneed(client, message):
@@ -117,7 +40,7 @@ async def muted(client, message):
 async def muted(client, message):
     if not message.reply_to_message: return await message.reply_text(f"**قم بالرد علي رساله**")
     user_id = message.reply_to_message.from_user.id
-    if user_id in mute: mute.append(user_id)
+    if user_id in mute: mute.remove(user_id)
     await message.reply_text(f"**تم الغاء كتم المستخدم")
 
 @app.on_message(filters.command(["المطور", "مطور"], ""))
@@ -156,7 +79,7 @@ async def rddd(client, message):
 )
 async def memo(client: Client, message: Message):
     await message.reply_photo(
-        photo=f"https://telegra.ph/file/bbda6b6aeb0f63339ace2.jpg",
+        photo=f"https://telegra.ph/file/28179412acbc52d3873fd.jpg",
 caption=f"""**لمراسلة ميمو اضغت علي الزر بالاسفل .**""",
         reply_markup=InlineKeyboardMarkup(
             [

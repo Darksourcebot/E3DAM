@@ -128,7 +128,4 @@ def private_panel(_, BOT_USERNAME, OWNER: Union[bool, int] = None):
                     ),
                 ]
             )
-    buttons.append(
-        [InlineKeyboardButton(text=_["ST_B_6"], callback_data="LG")]
-    )
     return buttons

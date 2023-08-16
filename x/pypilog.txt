@@ -1,0 +1,13 @@
+Requirement already satisfied: pip in /opt/python/3.10.8/lib/python3.10/site-packages (23.1.2)
+Collecting pip
+  Downloading pip-23.2.1-py3-none-any.whl (2.1 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 28.0 MB/s eta 0:00:00
+Installing collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 23.1.2
+    Uninstalling pip-23.1.2:
+      Successfully uninstalled pip-23.1.2
+  WARNING: The scripts pip, pip3 and pip3.10 are installed in '/opt/python/3.10.8/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+Successfully installed pip-23.2.1
+ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'
