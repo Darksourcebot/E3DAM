@@ -108,17 +108,12 @@ async def nummmm(client: app, message):
        txt += f" {x.user.mention} ،"
        if i == 5:
         try:
-              await client.send_photo(message.chat.id, photo=photo, caption=f"{zz}\n{txt}")
+              await client.send_message(message.chat.id, f"{zz}\n{txt}")
               i = 0
               txt = ""
               await asyncio.sleep(2)
-        except FloodWait as e:
-                    flood_time = int(e.x)
-                    if flood_time > 200:
-                        continue
-                    await asyncio.sleep(flood_time)
-        except Exception:
-              array.remove(message.chat.id)
+        except:
+          pass
   array.remove(message.chat.id)
 
 
