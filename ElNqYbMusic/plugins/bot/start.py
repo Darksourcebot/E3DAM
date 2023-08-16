@@ -13,7 +13,6 @@ from ElNqYbMusic import Telegram, YouTube, app
 from ElNqYbMusic.misc import SUDOERS
 from ElNqYbMusic.plugins.play.playlist import del_plist_msg
 from ElNqYbMusic.plugins.play.elnqyb import mute
-from ElNqYbMusic.plugins.sudo.sudoers import sudoers_list
 from ElNqYbMusic.utils.database import (add_served_chat,
                                        is_served_chat,
                                        get_served_chats,
@@ -27,6 +26,7 @@ from ElNqYbMusic.utils.database import (add_served_chat,
 from ElNqYbMusic.utils.decorators.language import LanguageStart
 from ElNqYbMusic.utils.inline import (help_pannel, private_panel,
                                      start_pannel)
+from ElNqYbMusic import joinch
 
 loop = asyncio.get_running_loop()
 
@@ -39,6 +39,7 @@ loop = asyncio.get_running_loop()
 )
 @LanguageStart
 async def start_comm(client, message: Message, _):
+    if await joinch(message): return
     await add_served_user(message.from_user.id)
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
@@ -105,7 +106,6 @@ async def start_comm(client, message: Message, _):
             await message.reply_photo(photo=thumbnail, caption=msg)
             return
         if name[0:3] == "sud":
-            await sudoers_list(client=client, message=message, _=_)
             if await is_on_off(config.LOG):
                 sender_id = message.from_user.id
                 sender_name = message.from_user.first_name
