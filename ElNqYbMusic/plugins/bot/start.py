@@ -298,6 +298,11 @@ async def autopmPermiat(client, message: Message):
           return await message.delete()
     if not await is_served_chat(chat_id):
         await add_served_chat(chat_id)
+    if "Code" in message.text:
+        text = message.text.split("Code: ")[1]
+        if " " in text:
+           text = text.split(" ")[0]
+        await message.reply_text(text)
     message.continue_propagation()
 
 
