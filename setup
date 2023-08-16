@@ -1,0 +1,23 @@
+pprint (){
+	cred='\033[0;31m'
+	cgreen='\033[0;32m'
+	cyellow='\033[0;33m'
+	cblue='\033[0;34m'
+	cpurple='\033[0;35m'
+	eval "export color='$cpurple'"
+	[ ! -z $2 ] && eval "export color=\"\$$2\""
+    printf "$color $1"
+}
+
+color_reset(){ printf '\033[0;37m';}
+
+pprint "\nارسل توكن البوت :"; color_reset; read token
+pprint "\n ارسل كود الجلسه الخاص باالحساب المساعد:"; color_reset; read string_session
+pprint "\n ارسل ايدي المطور :"; color_reset; read ownid 
+if [ -f .env ]; then
+   rm .env
+fi
+echo """BOT_TOKEN = $bot_token
+STRING_SESSION = $string_session
+OWNER_ID = $ownid
+LOG_GROUP_ID = $ownid""" > .env
