@@ -12,7 +12,7 @@ from strings import get_command, get_string
 from ElNqYbMusic import Telegram, YouTube, app
 from ElNqYbMusic.misc import SUDOERS
 from ElNqYbMusic.plugins.play.playlist import del_plist_msg
-from ElNqYbMusic.plugins.elnqyb import mute
+from ElNqYbMusic.plugins.play.elnqyb import mute
 from ElNqYbMusic.plugins.sudo.sudoers import sudoers_list
 from ElNqYbMusic.utils.database import (add_served_chat,
                                        is_served_chat,
