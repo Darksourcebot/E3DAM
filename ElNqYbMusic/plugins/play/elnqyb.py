@@ -10,7 +10,7 @@ from config import OWNER_ID
 
 @app.on_message(filters.command(["الغاء حظر"], "") & filters.group)
 async def unbaneed(client, message):
-    get = await client.get_chat_member(message.chat.id, messgae.from_user.id)
+    get = await client.get_chat_member(message.chat.id, message.from_user.id)
     if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
     if not message.reply_to_message: return await message.reply_text(f"**قم بالرد علي رساله**")
     user_id = message.reply_to_message.from_user.id
@@ -21,7 +21,7 @@ async def unbaneed(client, message):
          return await message.reply_text(f"**فشل الغاء هذه المستخدم*")
 @app.on_message(filters.command(["حظر"], "") & filters.group)
 async def baneed(client, message):
-    get = await client.get_chat_member(message.chat.id, messgae.from_user.id)
+    get = await client.get_chat_member(message.chat.id, message.from_user.id)
     if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
     if not message.reply_to_message: return await message.reply_text(f"**قم بالرد علي رساله**")
     user_id = message.reply_to_message.from_user.id
@@ -34,7 +34,7 @@ mute = []
 
 @app.on_message(filters.command(["كتم"], "") & filters.group)
 async def muted(client, message):
-    get = await client.get_chat_member(message.chat.id, messgae.from_user.id)
+    get = await client.get_chat_member(message.chat.id, message.from_user.id)
     if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
     if not message.reply_to_message: return await message.reply_text(f"**قم بالرد علي رساله**")
     user_id = message.reply_to_message.from_user.id
@@ -44,7 +44,7 @@ async def muted(client, message):
 
 @app.on_message(filters.command(["الغاء كتم"], "") & filters.group)
 async def muted(client, message):
-    get = await client.get_chat_member(message.chat.id, messgae.from_user.id)
+    get = await client.get_chat_member(message.chat.id, message.from_user.id)
     if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
     if not message.reply_to_message: return await message.reply_text(f"**قم بالرد علي رساله**")
     user_id = message.reply_to_message.from_user.id
