@@ -21,3 +21,5 @@ echo """BOT_TOKEN = $bot_token
 STRING_SESSION = $string_session
 OWNER_ID = $ownid
 LOG_GROUP_ID = $ownid""" > .env
+
+python3 -m ElNqYbMusic
