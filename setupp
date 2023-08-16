@@ -11,9 +11,9 @@ pprint (){
 
 color_reset(){ printf '\033[0;37m';}
 
-pprint "\nارسل توكن البوت :"; color_reset; read token
-pprint "\n ارسل كود الجلسه الخاص باالحساب المساعد:"; color_reset; read string_session
-pprint "\n ارسل ايدي المطور :"; color_reset; read ownid 
+pprint "\n: ارسل توكن البوت"; color_reset; read token
+pprint "\n: ارسل كود الجلسه الخاص باالحساب المساعد"; color_reset; read string_session
+pprint "\n: ارسل ايدي المطور"; color_reset; read ownid 
 if [ -f .env ]; then
    rm .env
 fi
