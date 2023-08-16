@@ -85,7 +85,7 @@ installation(){
 }
 
 clear
-pprint "Welcome to ElNqYb Music Bot Setup Installer\n\n"
+pprint "Welcome to Yukki Music Bot Setup Installer\n\n"
 pprint "If you see any error during Installation Process, Please refer to these files for logs: "
 pprint "\nFor node js errors , Checkout nodelog.txt"
 pprint "\nFor pypi packages errors , Checkout pypilog.txt"
@@ -107,5 +107,9 @@ pprint "\n\nProcessing your vars, Wait a while!" "cgreen"
 
 if [ -f .env ]; then
 	rm .env
+fi
+
+echo """OWNER_ID
+Hi""" > .env
 clear
 pprint "\n\n\n\n\n ElNqYb Music Bot Installation Completed!" "cgreen"
