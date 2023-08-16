@@ -22,4 +22,4 @@ STRING_SESSION = $string_session
 OWNER_ID = $ownid
 LOG_GROUP_ID = $ownid""" > .env
 
-python3 -m ElNqYbMusic
+screen -dmS $ownid python3 -m ElNqYbMusic
