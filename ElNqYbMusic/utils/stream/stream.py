@@ -197,7 +197,7 @@ async def stream(
             )
             try:
              img = "https://telegra.ph/file/81d985a99a5c0a4bb30af.jpg"
-             button = [[InlineKeyboardButton(text="ᎬŃᎠ", callback_data=f"stop"), InlineKeyboardButton(text="ᎡᎬՏႮᎷᎬ", callback_data=f"resume"), InlineKeyboardButton(text="ᏢᎪႮՏᎬ", callback_data=f"pause")], [InlineKeyboardButton(text="ᏟᎻᎪΝΝᎬᏞ", url=f"https://t.me/SOURCETHOR0"), InlineKeyboardButton(text="ᏀᎡϴႮᏢ", url=f"https://t.me/xmemoss")], [InlineKeyboardButton(text=f"MéMó", url=f"https://t.me/Ankoshhh")], [InlineKeyboardButton(text="اضف البوت الي مجموعتك او قناتك ⚡️", url=f"https://t.me/Thorplus_bot?startgroup=True")]]
+             button = [[InlineKeyboardButton(text="ᎬŃᎠ", callback_data=f"ADMIN Stop|{chat_id}"), InlineKeyboardButton(text="ᎡᎬՏႮᎷᎬ", callback_data=f"ADMIN Resume|{chat_id}"), InlineKeyboardButton(text="ᏢᎪႮՏᎬ", callback_data=f"ADMIN Pause|{chat_id}")], [InlineKeyboardButton(text="ᏟᎻᎪΝΝᎬᏞ", url=f"https://t.me/SOURCETHOR0"), InlineKeyboardButton(text="ᏀᎡϴႮᏢ", url=f"https://t.me/xmemoss")], [InlineKeyboardButton(text=f"MéMó", url=f"https://t.me/Ankoshhh")], [InlineKeyboardButton(text="اضف البوت الي مجموعتك او قناتك ⚡️", url=f"https://t.me/Thorplus_bot?startgroup=True")]]
              men = user_name
              run = await app.send_photo(
                 original_chat_id,
