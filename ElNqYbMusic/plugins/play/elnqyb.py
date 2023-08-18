@@ -87,7 +87,7 @@ async def muted(client, message):
 
 words = []
 links = []
-@app.on_message(command(["قفل الاسائه"]) & ~filters.private)
+@app.on_message(command(["قفل الاسائه", "منع الاسائه"]) & ~filters.private)
 async def loclkword(client: app, message):
     chek = await client.get_chat_member(message.chat.id, message.from_user.id)
     if not chek.status in ["administrator", "creator"]: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
@@ -100,7 +100,7 @@ async def openword(client: app, message):
     if message.chat.id in words: words.remove(message.chat.id)
     return await message.reply_text(f"**تم فتح الاسائه*")
 
-@app.on_message(command(["قفل الروابط"]) & ~filters.private)
+@app.on_message(command(["قفل الروابط", "منع الروابط"]) & ~filters.private)
 async def loclklinks(client: app, message):
     chek = await client.get_chat_member(message.chat.id, message.from_user.id)
     if not chek.status in ["administrator", "creator"]: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
