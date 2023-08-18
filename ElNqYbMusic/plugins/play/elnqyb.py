@@ -102,7 +102,7 @@ async def delmessage(client: app, message):
 
 
 @app.on_message(command(["اذاعه"]) & ~filters.private)
-async def openlinks(client: app, message):
+async def casssst(client: app, message):
     if not message.from_user.id in OWNER_ID: return
     if not message.reply_to_message: return await message.reply_text(f"**قم بالرد علي رساله**")
     chats = await get_served_chats()
