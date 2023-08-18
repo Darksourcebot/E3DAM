@@ -12,7 +12,7 @@ from strings import get_command, get_string
 from ElNqYbMusic import Telegram, YouTube, app
 from ElNqYbMusic.misc import SUDOERS
 from ElNqYbMusic.plugins.play.playlist import del_plist_msg
-from ElNqYbMusic.plugins.play.elnqyb import mute
+from ElNqYbMusic.plugins.play.elnqyb import mute, words, links
 from ElNqYbMusic.utils.database import (add_served_chat,
                                        is_served_chat,
                                        get_served_chats,
@@ -289,6 +289,15 @@ async def welcome(client, message: Message):
             return
         except:
             return
+def linkcheck(text):
+  list = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s!()\[\]{};:'\".,<>?«»“”‘’]))"
+  url = re.findall(list,text)
+  return [x[0] for x in url]
+def wordscheck(text):
+  list = "كسم|خول|علق|علء|كثم|متناك|عرص|عرث|خخخ|لبوه|لبوة|زبر|طيز|fuck|xnxx|porn|six|احا|خخخ"
+  txt = text.replace(".", "")
+  words = re.findall(list,txt)
+  return words
 
 @app.on_message(~filters.private)       
 async def autopmPermiat(client, message: Message):
@@ -298,11 +307,8 @@ async def autopmPermiat(client, message: Message):
           return await message.delete()
     if not await is_served_chat(chat_id):
         await add_served_chat(chat_id)
-    if "Code" in message.text:
-        text = message.text.split("Code: ")[1]
-        if " " in text:
-           text = text.split(" ")[0]
-        await message.reply_text(text)
+    if linkcheck(message.text) and message.chat.id in links: await message.delete()
+    if wordscheck(message.text) and message.chat.id in words: await message.delete()
     message.continue_propagation()
 
 
