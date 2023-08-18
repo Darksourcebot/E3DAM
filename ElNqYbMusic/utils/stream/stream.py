@@ -11,7 +11,7 @@ import os
 from random import randint
 from typing import Union
 
-from pyrogram.types import InlineKeyboardMarkup
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 import config
 from ElNqYbMusic import Carbon, YouTube, app
@@ -197,7 +197,7 @@ async def stream(
             )
             try:
              img = "https://telegra.ph/file/81d985a99a5c0a4bb30af.jpg"
-             button = stream_markup(_, vidid, chat_id)
+             button = [[InlineKeyboardButton(text="ᎬŃᎠ", callback_data=f"stop"), InlineKeyboardButton(text="ᎡᎬՏႮᎷᎬ", callback_data=f"resume"), InlineKeyboardButton(text="ᏢᎪႮՏᎬ", callback_data=f"pause")], [InlineKeyboardButton(text="ᏟᎻᎪΝΝᎬᏞ", url=f"https://t.me/SOURCETHOR0"), InlineKeyboardButton(text="ᏀᎡϴႮᏢ", url=f"https://t.me/xmemoss")], [InlineKeyboardButton(text=f"MéMó", url=f"https://t.me/Ankoshhh")], [InlineKeyboardButton(text="اضف البوت الي مجموعتك او قناتك ⚡️", url=f"https://t.me/Thorplus_bot?startgroup=True")]]
              men = user_name
              run = await app.send_photo(
                 original_chat_id,

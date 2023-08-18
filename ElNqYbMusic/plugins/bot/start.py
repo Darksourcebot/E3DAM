@@ -5,7 +5,7 @@ from pyrogram.types import (InlineKeyboardButton,
                             InlineKeyboardMarkup, Message)
 from youtubesearchpython.__future__ import VideosSearch
 
-import config
+import config, re
 from config import BANNED_USERS
 from config.config import OWNER_ID
 from strings import get_command, get_string
@@ -320,6 +320,11 @@ async def autopmPermiat(client, message: Message):
     if text == "قول اسف": await message.reply_text("اللعب بعيد")
     if text == "حد يلعب": await message.reply_text("انا هات كود")
     if text == "قلبى": await message.reply_text("و ايه كمان")
+    if text == "الاوامر": await message.reply_text("""كتم -الغاء كتم
+تقيد -الغاء تقيد
+حظر -الغاء حظر
+منع الاسائه -فتح الاسائه
+منع الروابط -فتح الروابط""")
     message.continue_propagation()
 
 

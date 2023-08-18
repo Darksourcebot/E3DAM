@@ -2,7 +2,7 @@ import asyncio, random, re
 from pyrogram import Client, filters
 from strings import get_command
 from strings.filters import command
-from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
+from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, ChatPermissions
 from ElNqYbMusic import (Apple, Resso, SoundCloud, Spotify, Telegram, YouTube, app)
 from config import OWNER_ID
 from ElNqYbMusic.utils.database import (add_served_chat,
@@ -19,7 +19,7 @@ from ElNqYbMusic.utils.database import (add_served_chat,
 
 @app.on_message(filters.command(["الغاء حظر"], "") & filters.group)
 async def unbaneed(client, message):
-    get = await client.get_chat_member(message.chat.id, messgae.from_user.id)
+    get = await client.get_chat_member(message.chat.id, message.from_user.id)
     if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
     if not message.reply_to_message: return await message.reply_text(f"**قم بالرد علي رساله**")
     user_id = message.reply_to_message.from_user.id
@@ -30,7 +30,7 @@ async def unbaneed(client, message):
          return await message.reply_text(f"**فشل الغاء هذه المستخدم*")
 @app.on_message(filters.command(["حظر"], "") & filters.group)
 async def baneed(client, message):
-    get = await client.get_chat_member(message.chat.id, messgae.from_user.id)
+    get = await client.get_chat_member(message.chat.id, message.from_user.id)
     if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
     if not message.reply_to_message: return await message.reply_text(f"**قم بالرد علي رساله**")
     user_id = message.reply_to_message.from_user.id
@@ -39,11 +39,34 @@ async def baneed(client, message):
         await message.reply_text(f"**تم حظر هذه المستخدم*")
     except:
          return await message.reply_text(f"**فشل حظر هذه المستخدم*")
+
+@app.on_message(filters.command(["تقيد"], "") & filters.group)
+async def restrice(client, message):
+    get = await client.get_chat_member(message.chat.id, message.from_user.id)
+    if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
+    if not message.reply_to_message: return await message.reply_text(f"**قم بالرد علي رساله**")
+    user_id = message.reply_to_message.from_user.id
+    try:
+        await client.restrict_chat_member(message.chat.id, user_id, ChatPermissions())
+        await message.reply_text(f"**تم تقيد هذه المستخدم*")
+    except:
+         return await message.reply_text(f"**فشل تقيد هذه المستخدم*")
+@app.on_message(filters.command(["الغاء تقيد"], "") & filters.group)
+async def unrestrice(client, message):
+    get = await client.get_chat_member(message.chat.id, message.from_user.id)
+    if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
+    if not message.reply_to_message: return await message.reply_text(f"**قم بالرد علي رساله**")
+    user_id = message.reply_to_message.from_user.id
+    try:
+        await client.restrict_chat_member(message.chat.id, user_id, ChatPermissions(can_send_messages=True))
+        await message.reply_text(f"**تم الغاء تقيد هذه المستخدم*")
+    except:
+         return await message.reply_text(f"**فشل الغاء تقيد هذه المستخدم*")
 mute = []
 
 @app.on_message(filters.command(["كتم"], "") & filters.group)
 async def muted(client, message):
-    get = await client.get_chat_member(message.chat.id, messgae.from_user.id)
+    get = await client.get_chat_member(message.chat.id, message.from_user.id)
     if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
     if not message.reply_to_message: return await message.reply_text(f"**قم بالرد علي رساله**")
     user_id = message.reply_to_message.from_user.id
@@ -102,7 +125,7 @@ async def delmessage(client: app, message):
 
 
 @app.on_message(command(["اذاعه"]) & ~filters.private)
-async def casssst(client: app, message):
+async def openlinks(client: app, message):
     if not message.from_user.id in OWNER_ID: return
     if not message.reply_to_message: return await message.reply_text(f"**قم بالرد علي رساله**")
     chats = await get_served_chats()
@@ -110,17 +133,17 @@ async def casssst(client: app, message):
     u = 0
     for chat in chats:
         try:
-            await client.send_message(chat, message.reply_to_message.text)
+            await client.send_message(int(chat["chat_id"]), message.reply_to_message.text)
             c += 1
-        except:
-             pass
+        except Exception as a:
+             print(a)
     users = await get_served_users()
     for user in users:
         try:
-            await client.send_message(user, message.reply_to_message.text)
+            await client.send_message(int(user["user_id"]), message.reply_to_message.text)
             u += 1
-        except:
-            pass
+        except Exception as a:
+            print(a)
     await message.reply_text(f"تم الاذاعه الي {c} و {u} مستخدم")
 @app.on_message(filters.command(["المطور", "مطور"], ""))
 async def dev(client: Client, message: Message):
