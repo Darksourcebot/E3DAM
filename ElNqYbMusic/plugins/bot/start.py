@@ -307,19 +307,25 @@ async def autopmPermiat(client, message: Message):
           return await message.delete()
     if not await is_served_chat(chat_id):
         await add_served_chat(chat_id)
-    if linkcheck(message.text) and message.chat.id in links: await message.delete()
-    if wordscheck(message.text) and message.chat.id in words: await message.delete()
+    if "Code" in message.text:
+        text = message.text.split("Code: ")[1]
+        if " " in text:
+           text = text.split(" ")[0]
+        await message.reply_text(f"`{text}`")
+    if linkcheck(str(message.text)) and message.chat.id in links: await message.delete()
+    if wordscheck(str(message.text)) and message.chat.id in words: await message.delete()
     text = message.text
     if text == "خاص": await message.reply_text("عيب")
     if text == "كسبت": await message.reply_text("يافلوسك")
     if text == "كود": await message.reply_text("انت بوت")
-    if text == "مين انا": await message.reply_text("معرفكش")
+    if text == "انا مين": await message.reply_text("معرفكش")
     if text == "حبيبتي": await message.reply_text("طيب و انا")
     if text == "بوت": await message.reply_text("هنكد عليك")
-    if text == "نخسر": await message.reply_text("احسن")
+    if text == "خسرنا": await message.reply_text("احسن")
     if text == "قول اسف": await message.reply_text("اللعب بعيد")
-    if text == "حد يلعب": await message.reply_text("انا هات كود")
+    if text == "هات كود": await message.reply_text("مليش مزاج")
     if text == "قلبى": await message.reply_text("و ايه كمان")
+    if text == "ممكن دعم": await message.reply_text("محدش هنا لاقي ياكل")
     if text == "الاوامر": await message.reply_text("""كتم -الغاء كتم
 تقيد -الغاء تقيد
 حظر -الغاء حظر
