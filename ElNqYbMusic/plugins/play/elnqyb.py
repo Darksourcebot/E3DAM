@@ -27,7 +27,7 @@ async def unbaneed(client, message):
     user_id = message.reply_to_message.from_user.id
     try:
         await client.unban_chat_member(message.chat.id, user_id)
-        await message.reply_text(f"**تم الغاء حظر هذه المستخدم*")
+        await message.reply_text(f"**تم الغاء حظر هذه المستخدم**")
     except:
          return await message.reply_text(f"**فشل الغاء هذه المستخدم*")
 @app.on_message(filters.command(["حظر"], "") & filters.group)
@@ -37,11 +37,12 @@ async def baneed(client, message):
      if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
     if not message.reply_to_message: return await message.reply_text(f"**قم بالرد علي رساله**")
     user_id = message.reply_to_message.from_user.id
+    if user_id in sudo: return await message.reply_text(f"**لا يمكن حظر هذا المستخدم**")
     try:
         await client.ban_chat_member(message.chat.id, user_id)
-        await message.reply_text(f"**تم حظر هذه المستخدم*")
+        await message.reply_text(f"**تم حظر هذه المستخدم**")
     except:
-         return await message.reply_text(f"**فشل حظر هذه المستخدم*")
+         return await message.reply_text(f"**فشل حظر هذه المستخدم**")
 
 @app.on_message(filters.command(["تقيد"], "") & filters.group)
 async def restrice(client, message):
@@ -50,11 +51,12 @@ async def restrice(client, message):
      if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
     if not message.reply_to_message: return await message.reply_text(f"**قم بالرد علي رساله**")
     user_id = message.reply_to_message.from_user.id
+    if user_id in sudo: return await message.reply_text(f"**لا يمكن تقيد هذا المستخدم**")
     try:
         await client.restrict_chat_member(message.chat.id, user_id, ChatPermissions())
-        await message.reply_text(f"**تم تقيد هذه المستخدم*")
+        await message.reply_text(f"**تم تقيد هذه المستخدم**")
     except:
-         return await message.reply_text(f"**فشل تقيد هذه المستخدم*")
+         return await message.reply_text(f"**فشل تقيد هذه المستخدم**")
 
 @app.on_message(filters.command(["الغاء تقيد"], "") & filters.group)
 async def unrestrice(client, message):
@@ -65,9 +67,9 @@ async def unrestrice(client, message):
     user_id = message.reply_to_message.from_user.id
     try:
         await client.restrict_chat_member(message.chat.id, user_id, ChatPermissions(can_send_messages=True))
-        await message.reply_text(f"**تم الغاء تقيد هذه المستخدم*")
+        await message.reply_text(f"**تم الغاء تقيد هذه المستخدم**")
     except:
-         return await message.reply_text(f"**فشل الغاء تقيد هذه المستخدم*")
+         return await message.reply_text(f"**فشل الغاء تقيد هذه المستخدم**")
 mute = []
 
 @app.on_message(filters.command(["كتم"], "") & filters.group)
@@ -77,8 +79,9 @@ async def muted(client, message):
      if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
     if not message.reply_to_message: return await message.reply_text(f"**قم بالرد علي رساله**")
     user_id = message.reply_to_message.from_user.id
+    if user_id in sudo: return await message.reply_text(f"**لا يمكن كتم هذا المستخدم**")
     if not user_id in mute: mute.append(user_id)
-    await message.reply_text(f"**تم كتم المستخدم")
+    await message.reply_text(f"**تم كتم المستخدم**")
 
 
 @app.on_message(filters.command(["الغاء كتم"], "") & filters.group)
@@ -89,7 +92,7 @@ async def muted(client, message):
     if not message.reply_to_message: return await message.reply_text(f"**قم بالرد علي رساله**")
     user_id = message.reply_to_message.from_user.id
     if user_id in mute: mute.remove(user_id)
-    await message.reply_text(f"**تم الغاء كتم المستخدم")
+    await message.reply_text(f"**تم الغاء كتم المستخدم**")
 
 
 
