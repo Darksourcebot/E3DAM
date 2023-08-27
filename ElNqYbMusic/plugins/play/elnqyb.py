@@ -55,6 +55,7 @@ async def restrice(client, message):
         await message.reply_text(f"**تم تقيد هذه المستخدم*")
     except:
          return await message.reply_text(f"**فشل تقيد هذه المستخدم*")
+
 @app.on_message(filters.command(["الغاء تقيد"], "") & filters.group)
 async def unrestrice(client, message):
     if not message.from_user.id in sudo:
