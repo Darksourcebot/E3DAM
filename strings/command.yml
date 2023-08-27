@@ -57,7 +57,7 @@ RESTART_COMMAND : ["/restart","ترسيت"]
 # Sudo Command
 ADDSUDO_COMMAND : ["/addsudo", "رفع مطور"]
 DELSUDO_COMMAND : ["/delsudo", "تنزيل مطور"]
-SUDOUSERS_COMMAND : ["/sudolist", "الادمنيه"]
+SUDOUSERS_COMMAND : ["/sudolist", "المطورين"]
 
 #Broadcast 
 BROADCAST_COMMAND : ["/broadcast","ذيع عام", "broadcast", "ذيع"]

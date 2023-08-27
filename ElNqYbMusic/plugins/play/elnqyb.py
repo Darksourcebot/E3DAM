@@ -5,6 +5,7 @@ from strings.filters import command
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, ChatPermissions
 from ElNqYbMusic import (Apple, Resso, SoundCloud, Spotify, Telegram, YouTube, app)
 from config import OWNER_ID
+from ElNqYbMusic.misc import SUDOERS as sudo
 from ElNqYbMusic.utils.database import (add_served_chat,
                                        is_served_chat,
                                        get_served_chats,
@@ -19,8 +20,9 @@ from ElNqYbMusic.utils.database import (add_served_chat,
 
 @app.on_message(filters.command(["الغاء حظر"], "") & filters.group)
 async def unbaneed(client, message):
-    get = await client.get_chat_member(message.chat.id, message.from_user.id)
-    if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
+    if not message.from_user.id in sudo:
+     get = await client.get_chat_member(message.chat.id, message.from_user.id)
+     if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
     if not message.reply_to_message: return await message.reply_text(f"**قم بالرد علي رساله**")
     user_id = message.reply_to_message.from_user.id
     try:
@@ -30,8 +32,9 @@ async def unbaneed(client, message):
          return await message.reply_text(f"**فشل الغاء هذه المستخدم*")
 @app.on_message(filters.command(["حظر"], "") & filters.group)
 async def baneed(client, message):
-    get = await client.get_chat_member(message.chat.id, message.from_user.id)
-    if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
+    if not message.from_user.id in sudo:
+     get = await client.get_chat_member(message.chat.id, message.from_user.id)
+     if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
     if not message.reply_to_message: return await message.reply_text(f"**قم بالرد علي رساله**")
     user_id = message.reply_to_message.from_user.id
     try:
@@ -42,8 +45,9 @@ async def baneed(client, message):
 
 @app.on_message(filters.command(["تقيد"], "") & filters.group)
 async def restrice(client, message):
-    get = await client.get_chat_member(message.chat.id, message.from_user.id)
-    if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
+    if not message.from_user.id in sudo:
+     get = await client.get_chat_member(message.chat.id, message.from_user.id)
+     if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
     if not message.reply_to_message: return await message.reply_text(f"**قم بالرد علي رساله**")
     user_id = message.reply_to_message.from_user.id
     try:
@@ -53,8 +57,9 @@ async def restrice(client, message):
          return await message.reply_text(f"**فشل تقيد هذه المستخدم*")
 @app.on_message(filters.command(["الغاء تقيد"], "") & filters.group)
 async def unrestrice(client, message):
-    get = await client.get_chat_member(message.chat.id, message.from_user.id)
-    if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
+    if not message.from_user.id in sudo:
+     get = await client.get_chat_member(message.chat.id, message.from_user.id)
+     if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
     if not message.reply_to_message: return await message.reply_text(f"**قم بالرد علي رساله**")
     user_id = message.reply_to_message.from_user.id
     try:
@@ -66,8 +71,9 @@ mute = []
 
 @app.on_message(filters.command(["كتم"], "") & filters.group)
 async def muted(client, message):
-    get = await client.get_chat_member(message.chat.id, message.from_user.id)
-    if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
+    if not message.from_user.id in sudo:
+     get = await client.get_chat_member(message.chat.id, message.from_user.id)
+     if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
     if not message.reply_to_message: return await message.reply_text(f"**قم بالرد علي رساله**")
     user_id = message.reply_to_message.from_user.id
     if not user_id in mute: mute.append(user_id)
@@ -76,8 +82,9 @@ async def muted(client, message):
 
 @app.on_message(filters.command(["الغاء كتم"], "") & filters.group)
 async def muted(client, message):
-    get = await client.get_chat_member(message.chat.id, message.from_user.id)
-    if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
+    if not message.from_user.id in sudo:
+     get = await client.get_chat_member(message.chat.id, message.from_user.id)
+     if not get.can_restrict_members: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
     if not message.reply_to_message: return await message.reply_text(f"**قم بالرد علي رساله**")
     user_id = message.reply_to_message.from_user.id
     if user_id in mute: mute.remove(user_id)
@@ -89,34 +96,39 @@ words = []
 links = []
 @app.on_message(command(["قفل الاسائه", "منع الاسائه"]) & ~filters.private)
 async def loclkword(client: app, message):
-    chek = await client.get_chat_member(message.chat.id, message.from_user.id)
-    if not chek.status in ["administrator", "creator"]: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
+    if not message.from_user.id in sudo:
+     chek = await client.get_chat_member(message.chat.id, message.from_user.id)
+     if not chek.status in ["administrator", "creator"] : return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
     if not message.chat.id in words: words.append(message.chat.id)
     return await message.reply_text(f"**تم قفل الاسائه*")
 @app.on_message(command(["فتح الاسائه"]) & ~filters.private)
 async def openword(client: app, message):
-    chek = await client.get_chat_member(message.chat.id, message.from_user.id)
-    if not chek.status in ["administrator", "creator"]: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
+    if not message.from_user.id in sudo:
+     chek = await client.get_chat_member(message.chat.id, message.from_user.id)
+     if not chek.status in ["administrator", "creator"]: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
     if message.chat.id in words: words.remove(message.chat.id)
     return await message.reply_text(f"**تم فتح الاسائه*")
 
 @app.on_message(command(["قفل الروابط", "منع الروابط"]) & ~filters.private)
 async def loclklinks(client: app, message):
-    chek = await client.get_chat_member(message.chat.id, message.from_user.id)
-    if not chek.status in ["administrator", "creator"]: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
+    if not message.from_user.id in sudo:
+     chek = await client.get_chat_member(message.chat.id, message.from_user.id)
+     if not chek.status in ["administrator", "creator"]: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
     if not message.chat.id in links: links.append(message.chat.id)
     return await message.reply_text(f"**تم قفل الروابط*")
 @app.on_message(command(["فتح الروابط"]) & ~filters.private)
 async def openlinks(client: app, message):
-    chek = await client.get_chat_member(message.chat.id, message.from_user.id)
-    if not chek.status in ["administrator", "creator"]: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
+    if not message.from_user.id in sudo:
+     chek = await client.get_chat_member(message.chat.id, message.from_user.id)
+     if not chek.status in ["administrator", "creator"]: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
     if message.chat.id in links: links.remove(message.chat.id)
     return await message.reply_text(f"**تم فتح الروابط*")
 
 @app.on_message(command(["مسح"]) & ~filters.private)
 async def delmessage(client: app, message):
-    chek = await client.get_chat_member(message.chat.id, message.from_user.id)
-    if not chek.status in ["administrator", "creator"]: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
+    if not message.from_user.id in sudo:
+     chek = await client.get_chat_member(message.chat.id, message.from_user.id)
+     if not chek.status in ["administrator", "creator"]: return await message.reply_text(f"**ليس لديك صلاحيات كافيه**")
     if message.reply_to_message:
        await message.delete()
        await message.reply_to_message.delete()
@@ -181,8 +193,9 @@ array = []
 async def nummmm(client: app, message):
   if message.chat.id in array:
      return await message.reply_text("التاك قيد التشغيل حالياً ،")
-  chek = await client.get_chat_member(message.chat.id, message.from_user.id)
-  if not chek.status in ["administrator", "creator"]:
+  if not message.from_user.id in sudo:
+   chek = await client.get_chat_member(message.chat.id, message.from_user.id)
+   if not chek.status in ["administrator", "creator"]:
     await message.reply("يجب انت تكون مشرف لاستخدام الامر 🖱️")
     return
   await message.reply_text("جاري بدأ المنشن ، لايقاف الامر اضغط \n /cancel او اكتب بس منشن")
@@ -213,8 +226,9 @@ async def nummmm(client: app, message):
 
 @app.on_message(command(["بس المنشن", "/cancel","بس منشن"]))
 async def stop(client, message):
-  chek = await client.get_chat_member(message.chat.id, message.from_user.id)
-  if not chek.status in ["administrator", "creator"]:
+  if not message.from_user.id in sudo:
+   chek = await client.get_chat_member(message.chat.id, message.from_user.id)
+   if not chek.status in ["administrator", "creator"]:
     await message.reply("**يجب انت تكون مشرف لاستخدام الامر 🖱️")
     return
   if message.chat.id not in array:
