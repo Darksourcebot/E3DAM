@@ -302,22 +302,22 @@ def wordscheck(text):
 smsm = []
 url = "https://bumcomingo.simsimi.com/simtalk/get_talk_set"
 headers = {'accept': 'application/json, text/plain, */*','os': 'a','av': '8.4.4','appcheck': '','Content-Type': 'application/json','Content-Length': '159','Host': 'bumcomingo.simsimi.com','Connection': 'Keep-Alive','Accept-Encoding': 'gzip','User-Agent': 'okhttp/4.9.1'}
-@app.on_message(filters.command(["تفعيل سمسمي"], "") & filters.group)
+@app.on_message(filters.command(["تفعيل الرد"], "") & filters.group)
 async def smsmon(client, message):
     if not message.from_user.id in sudo:
      chek = await client.get_chat_member(message.chat.id, message.from_user.id)
      if not chek.status in ["administrator", "creator"] : return await message.reply_text(f"**لا يمكنك تنفيذ هذا الامر**")
     if not message.chat.id in smsm:
         smsm.append(message.chat.id)
-    await message.reply_text(f"**تم تفعيل سمسمي بنجاح**")
-@app.on_message(filters.command(["تعطيل سمسمي"], "") & filters.group)
+    await message.reply_text(f"**تم تفعيل الرد بنجاح**")
+@app.on_message(filters.command(["تعطيل الرد"], "") & filters.group)
 async def smsmof(client, message):
     if not message.from_user.id in sudo:
      chek = await client.get_chat_member(message.chat.id, message.from_user.id)
      if not chek.status in ["administrator", "creator"] : return await message.reply_text(f"**لا يمكنك تنفيذ هذا الامر**")
      if message.chat.id in smsm:
         smsm.remove(message.chat.id)
-    await message.reply_text(f"**تم تفعيل سمسمي بنجاح**")
+    await message.reply_text(f"**تم تعطيل الرد بنجاح**")
 @app.on_message(~filters.private)       
 async def autopmPermiat(client, message: Message):
     chat_id = message.chat.id
