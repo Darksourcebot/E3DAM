@@ -316,7 +316,9 @@ async def smsmof(client, message):
      chek = await client.get_chat_member(message.chat.id, message.from_user.id)
      if not chek.status in ["administrator", "creator"] : return await message.reply_text(f"**لا يمكنك تنفيذ هذا الامر**")
      if message.chat.id in smsm:
-        smsm.remove(message.chat.id)
+        for chat in smsm:
+            if chat == message.chat.id:
+               smsm.remove(chat)
     await message.reply_text(f"**تم تعطيل الرد بنجاح**")
 @app.on_message(~filters.private)       
 async def autopmPermiat(client, message: Message):
