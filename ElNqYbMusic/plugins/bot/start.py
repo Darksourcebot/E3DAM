@@ -1,5 +1,5 @@
 import asyncio
-
+import requests, re
 from pyrogram import filters
 from pyrogram.types import (InlineKeyboardButton,
                             InlineKeyboardMarkup, Message)
@@ -11,6 +11,7 @@ from config.config import OWNER_ID
 from strings import get_command, get_string
 from ElNqYbMusic import Telegram, YouTube, app
 from ElNqYbMusic.misc import SUDOERS
+from ElNqYbMusic.misc import SUDOERS as sudo
 from ElNqYbMusic.plugins.play.playlist import del_plist_msg
 from ElNqYbMusic.plugins.play.elnqyb import mute, words, links
 from ElNqYbMusic.utils.database import (add_served_chat,
@@ -298,7 +299,25 @@ def wordscheck(text):
   txt = text.replace(".", "")
   words = re.findall(list,txt)
   return words
-
+smsm = []
+url = "https://bumcomingo.simsimi.com/simtalk/get_talk_set"
+headers = {'accept': 'application/json, text/plain, */*','os': 'a','av': '8.4.4','appcheck': '','Content-Type': 'application/json','Content-Length': '159','Host': 'bumcomingo.simsimi.com','Connection': 'Keep-Alive','Accept-Encoding': 'gzip','User-Agent': 'okhttp/4.9.1'}
+@app.on_message(filters.command(["تفعيل سمسمي"], "") & filters.group)
+async def smsmon(client, message):
+    if not message.from_user.id in sudo:
+     chek = await client.get_chat_member(message.chat.id, message.from_user.id)
+     if not chek.status in ["administrator", "creator"] : return await message.reply_text(f"**لا يمكنك تنفيذ هذا الامر**")
+    if not message.chat.id in smsm:
+        smsm.append(message.chat.id)
+    await message.reply_text(f"**تم تفعيل سمسمي بنجاح**")
+@app.on_message(filters.command(["تعطيل سمسمي"], "") & filters.group)
+async def smsmof(client, message):
+    if not message.from_user.id in sudo:
+     chek = await client.get_chat_member(message.chat.id, message.from_user.id)
+     if not chek.status in ["administrator", "creator"] : return await message.reply_text(f"**لا يمكنك تنفيذ هذا الامر**")
+     if message.chat.id in smsm:
+        smsm.remove(message.chat.id)
+    await message.reply_text(f"**تم تفعيل سمسمي بنجاح**")
 @app.on_message(~filters.private)       
 async def autopmPermiat(client, message: Message):
     chat_id = message.chat.id
@@ -325,12 +344,25 @@ async def autopmPermiat(client, message: Message):
     if text == "قول اسف": await message.reply_text("اللعب بعيد")
     if text == "هات كود": await message.reply_text("مليش مزاج")
     if text == "قلبى": await message.reply_text("و ايه كمان")
+    if text == "فارس": await message.reply_text("حبيبي انا")
+    if text == "هلال": await message.reply_text("ده قلبي ده")
     if text == "ممكن دعم": await message.reply_text("محدش هنا لاقي ياكل")
     if text == "الاوامر": await message.reply_text("""كتم -الغاء كتم
 تقيد -الغاء تقيد
 حظر -الغاء حظر
 منع الاسائه -فتح الاسائه
 منع الروابط -فتح الروابط""")
+    if message.chat.id in smsm:
+     if message.from_user.is_self: return
+     payload = {"uid": 414477568,"av": "8.4.4","os": "a","lc": "ar","cc": "EG","tz": "Africa/Cairo","cv": "","message": text,"free_level": 1,"logUID": "414477568","reg_now_days": 0}
+     response = requests.post(url, json=payload, headers=headers)
+     try:
+      out = response.json()['sentence']
+     except:
+        out = response.json()['detail']
+     out = re.sub('@[a-zA-Z]{3,}', '،', out)
+     out = re.sub(r'[0-9]+', '', out)
+     await message.reply_text(out)
     message.continue_propagation()
 
 
